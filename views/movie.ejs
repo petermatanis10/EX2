@@ -1,0 +1,104 @@
+<% // Submitted by: Peter Matanis, Raneen Mansour, Loai Matanis %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/movie.css" type="text/css" rel="stylesheet">
+    <link href="fresh.gif" type="image/gif" rel="shortcut icon">
+    <link rel="icon" type="image/x-icon" href="fresh.gif">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+    <div class="banner">
+        <header>
+            <img src="/banner.png" alt="Rancid Tomatoes" class="center">
+        </header>
+    </div>
+    <h1><%= film.Title %> (<%= film.Year %>)</h1>
+    
+    <div class="container">
+        <div class="generaloverview">
+            <div>
+                <img class="overview-img" src="/<%= film.FilmCode %>/poster.png" onerror="this.onerror=null; this.src='/<%= film.FilmCode %>/poster.jpg';" alt="movie poster">
+            </div>
+            <div class="movie-info ">
+                <dl>
+                    <% if (filmDetails && typeof filmDetails === 'object') { %>
+                        <% Object.entries(filmDetails).forEach(([key, value]) => { %>
+                            <% if (value) { %> 
+                                <dt><%= key.toUpperCase().replace(/_/g, ' ') %></dt>
+                                <% if (key === "Links") { %>  
+                                    <dd class="links">
+                                        <% value.split(',').forEach(link => { %>
+                                            <% let parts = link.trim().split(': '); %>
+                                            <% if (parts.length === 2) { %>
+                                                <span><%= parts[0] %>:</span>  
+                                                <a href="<%= parts[1] %>" target="_blank"><%= parts[1] %></a><br>
+                                            <% } else { %>
+                                                <a href="<%= link.trim() %>" target="_blank"><%= link.trim() %></a><br>
+                                            <% } %>
+                                        <% }) %>
+                                    </dd>
+                                <% } else { %>
+                                    <dd><%= value %></dd>
+                                <% } %>
+                            <% } %>
+                        <% }) %>
+                    <% } %>
+                </dl>
+            
+            </div>
+        </div>
+        
+        <div class="rating">
+            <div class="score-img">
+                <img src="<%= film.Score >= 60 ? '/freshbig.png' : '/rottenbig.png' %>" alt="Fresh">
+            </div>
+            <%= film.Score %>%
+        </div>
+
+        <div class="reviews">
+            <div class="flexcontainer">
+                <div class="p1">
+                    <% reviews.slice(0, Math.ceil(reviews.length / 2)).forEach(review => { %>
+                        <p class="review-box">
+                            <img src="<%= film.Score >= 60 ? '/fresh.gif' : '/rotten.gif' %>" alt="Fresh">
+                            <q><%= review.ReviewText %></q>
+                        </p>
+                        <p class="critic-info">
+                            <img src="/critic.gif" alt="Critic">
+                            <%= review.ReviewerName %> <br>
+                            <%= review.Affiliation || 'Independent' %>
+                        </p>
+                    <% }) %>
+                </div>
+        
+                <div class="p1">
+                    <% reviews.slice(Math.ceil(reviews.length / 2)).forEach(review => { %>
+                        <p class="review-box">
+                            <img src="<%= film.Score >= 60 ? '/fresh.gif' : '/rotten.gif' %>" alt="Fresh">
+                            <q><%= review.ReviewText %></q>
+                        </p>
+                        <p class="critic-info">
+                            <img src="/critic.gif" alt="Critic">
+                            <%= review.ReviewerName %> <br>
+                            <%= review.Affiliation || 'Independent' %>
+                        </p>
+                    <% }) %>
+                </div>
+            </div> 
+        </div>
+
+        <div class="footer-area">
+            <footer>
+                <p>(1-<%= reviews.length %>) of <%= reviews.length %></p>
+            </footer>
+        </div>
+
+</body>
+</html>
+
+
+<script>
+
+</script>
