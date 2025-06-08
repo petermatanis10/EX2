@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 app.get("/",(req,res)=>{
-    res.redirect("/movie.html")
+    res.redirect("/movie.html?title=PrincessBride")
 }) 
 
 // תצוגת סרט על פי פרמטר `title`

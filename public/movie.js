@@ -1,4 +1,5 @@
-fetch("/movie?title=PrincessBride")
+let query = location.search
+fetch("/movie"+query)
 .then(data=>data.json())
 .then(movies=>{
     let {film,filmDetails,posterPath,reviews} = movies
@@ -12,7 +13,7 @@ fetch("/movie?title=PrincessBride")
     let reviewLen       = document.getElementById("reviewLen")
 
 
-    h1Title.innerHTML = film.Year;
+    h1Title.innerHTML = film.Title+" "+film.Year ;
     imageOverview.src = `${film.FilmCode}/poster.png`
 
     if(filmDetails && typeof filmDetails == "object"){
@@ -47,7 +48,7 @@ fetch("/movie?title=PrincessBride")
 
 
     scoreImg.src = film.Score >= 60 ? '/freshbig.png' : '/rottenbig.png'
-    rating.innerHTML += film.Score;
+    rating.innerHTML += film.Score +"%";
 
     reviews.slice(0,Math.ceil(reviews.length/2)).forEach(review=>{
         p1.innerHTML += `
